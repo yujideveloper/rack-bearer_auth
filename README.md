@@ -1,8 +1,6 @@
 # Rack::BearerAuth
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rack/bearer_auth`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Rack::BearerAuth is middleware that make using [RFC 6750](https://tools.ietf.org/html/rfc6750) bearer auth in Rack apps.
 
 ## Installation
 
@@ -20,9 +18,43 @@ Or install it yourself as:
 
     $ gem install rack-bearer_auth
 
-## Usage
+## Configuration
 
-TODO: Write usage instructions here
+### Rsils configuration
+
+``` ruby
+module YourApp
+  class Application < Rails::Application
+
+    # ...
+
+    config.middleware.use, Rack::AuthBearer do
+      match path: "/foo" do |token|
+        # validate token
+      end
+
+      match via: :all do |token|
+        # validate token
+      end
+    end
+  end
+end
+```
+
+### Rack configuration
+
+``` ruby
+use Rack::BearerAuth do
+  match path: "/foo" do |token|
+    # validate token
+  end
+
+  match via: :all do |token|
+    # validate token
+  end
+end
+
+```
 
 ## Development
 
