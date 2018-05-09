@@ -3,7 +3,7 @@
 Rack::BearerAuth is middleware that make using [RFC 6750](https://tools.ietf.org/html/rfc6750) bearer auth in Rack apps.
 
 [![Build Status](https://travis-ci.org/yujideveloper/rack-bearer_auth.svg?branch=master)](https://travis-ci.org/yujideveloper/rack-bearer_auth)
-[![Maintainability](https://api.codeclimate.com/v1/badges/eb04cab6d55b0c7a1f7f/maintainability)](https://codeclimate.com/github/yujideveloper/rack-bearer_auth/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/db47f9a4e48bd30edb98/maintainability)](https://codeclimate.com/github/yujideveloper/rack-bearer_auth/maintainability)
 
 ## Installation
 
