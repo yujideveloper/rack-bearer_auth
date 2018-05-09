@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Yuji Hanamura"]
   spec.email         = ["yuji.developer@gmail.com"]
 
-  spec.summary       = "Middleware for usign RFC 6750 bearer auth in Rack apps"
-  spec.description   = "Middleware that will make Rack-based apps RFC 6750 bearer auth compatible"
+  spec.summary       = "Middleware for using RFC 6750 bearer auth in Rack apps"
+  spec.description   = "Middleware for using RFC 6750 bearer auth in Rack apps"
   spec.homepage      = "https://github.com/yujideveloper/rack-bearer_auth"
   spec.license       = "MIT"
 
