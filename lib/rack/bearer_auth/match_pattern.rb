@@ -46,8 +46,8 @@ module Rack
         case via
         when nil, :all
           true
-        when String
-          via == req.via
+        when Symbol, String
+          via.to_sym == req.via
         when Regexp
           !(via =~ req.via).nil?
         when Proc
