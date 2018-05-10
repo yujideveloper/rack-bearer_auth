@@ -23,9 +23,7 @@ module Rack
 
       def match(path: nil, via: nil, token: nil, &block)
         if block_given?
-          if token
-            warn "Token paramter is ignored."
-          end
+          warn "Token paramter is ignored." if token
           token = block
         end
 
@@ -43,15 +41,13 @@ module Rack
             return [401,
                     { "WWW-Authenticate" => 'Bearer realm="token_required"',
                       "Content-Type"     => "text/plain; charset=utf-8",
-                      "Content-Length"   => "0"
-                    },
+                      "Content-Length"   => "0" },
                     []]
           when :invalid_token
             return [401,
                     { "WWW-Authenticate" => 'Bearer error="invalid_token"',
                       "Content-Type"     => "text/plain; charset=utf-8",
-                      "Content-Length"   => "0"
-                    },
+                      "Content-Length"   => "0" },
                     []]
           else
             warn "A pattern is ignored."

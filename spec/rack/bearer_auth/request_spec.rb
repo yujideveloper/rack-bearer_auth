@@ -10,8 +10,7 @@ RSpec.describe Rack::BearerAuth::Request do
       let(:env) do
         { "PATH_INFO" => "/foo",
           "REQUEST_METHOD" => "GET",
-          "HTTP_AUTHORIZATION" => "Bearer test_token"
-        }
+          "HTTP_AUTHORIZATION" => "Bearer test_token" }
       end
 
       it { is_expected.to have_attributes path: "/foo", via: :get, token: "test_token" }
@@ -21,8 +20,7 @@ RSpec.describe Rack::BearerAuth::Request do
       let(:env) do
         { "PATH_INFO" => "/foo",
           "REQUEST_METHOD" => "GET",
-          "HTTP_AUTHORIZATION" => "Basic dXNlcjpwYXNzd29yZA=="
-        }
+          "HTTP_AUTHORIZATION" => "Basic dXNlcjpwYXNzd29yZA==" }
       end
 
       it { is_expected.to have_attributes path: "/foo", via: :get, token: nil }
@@ -31,8 +29,7 @@ RSpec.describe Rack::BearerAuth::Request do
     context "HTTP_AUTHORIZATION header is not specified" do
       let(:env) do
         { "PATH_INFO" => "/foo",
-          "REQUEST_METHOD" => "GET"
-        }
+          "REQUEST_METHOD" => "GET" }
       end
 
       it { is_expected.to have_attributes path: "/foo", via: :get, token: nil }
@@ -45,8 +42,7 @@ RSpec.describe Rack::BearerAuth::Request do
     let(:env) do
       { "PATH_INFO" => "/foo",
         "REQUEST_METHOD" => "GET",
-        "HTTP_AUTHORIZATION" => "Bearer #{token}"
-      }
+        "HTTP_AUTHORIZATION" => "Bearer #{token}" }
     end
 
     let(:valid_chars) do

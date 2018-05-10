@@ -212,13 +212,13 @@ RSpec.describe Rack::BearerAuth::MatchPattern do
 
       context "Regexp" do
         context "match pattern" do
-          let(:pattern) { described_class.new(%r{\A(get|post)\z}) }
+          let(:pattern) { described_class.new(/\A(get|post)\z/) }
 
           it { is_expected.to eq true }
         end
 
         context "mismatch pattern" do
-          let(:pattern) { described_class.new(%r{\A(post|delete)\z}) }
+          let(:pattern) { described_class.new(/\A(post|delete)\z/) }
 
           it { is_expected.to eq false }
         end
@@ -226,7 +226,7 @@ RSpec.describe Rack::BearerAuth::MatchPattern do
 
       context "Proc" do
         context "match pattern" do
-          let(:pattern) { described_class.new(->(p) { p == :get}) }
+          let(:pattern) { described_class.new(->(p) { p == :get }) }
 
           it { is_expected.to eq true }
         end
@@ -282,13 +282,13 @@ RSpec.describe Rack::BearerAuth::MatchPattern do
 
       context "Regexp" do
         context "match pattern" do
-          let(:pattern) { described_class.new(%r{\A.*_token\z}) }
+          let(:pattern) { described_class.new(/\A.*_token\z/) }
 
           it { is_expected.to eq true }
         end
 
         context "mismatch pattern" do
-          let(:pattern) { described_class.new(%r{\Amismatch_.*\z}) }
+          let(:pattern) { described_class.new(/\Amismatch_.*\z/) }
 
           it { is_expected.to eq false }
         end
