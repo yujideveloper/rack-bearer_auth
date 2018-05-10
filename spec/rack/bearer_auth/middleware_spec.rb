@@ -3,7 +3,7 @@
 require "spec_helper"
 require "rack/test"
 
-RSpec.describe Rack::BearerAuth do
+RSpec.describe Rack::BearerAuth::Middleware do
   include TestApplicationHelper
   include Rack::Test::Methods
 
@@ -14,7 +14,7 @@ RSpec.describe Rack::BearerAuth do
 
     context "with block argument" do
       subject do
-        Rack::BearerAuth::Middleware.new(test_app) do
+        described_class.new(test_app) do
         end
       end
 
@@ -23,7 +23,7 @@ RSpec.describe Rack::BearerAuth do
 
     context "without block argument" do
       subject do
-        Rack::BearerAuth::Middleware.new(test_app)
+        described_class.new(test_app)
       end
 
       it { expect { subject }.to raise_error(ArgumentError) }
@@ -39,7 +39,7 @@ RSpec.describe Rack::BearerAuth do
     context "with empty pattern" do
       let(:app) do
         test_app = TestApplicationHelper::TestApplication.new
-        Rack::BearerAuth::Middleware.new(test_app) {}
+        described_class.new(test_app) {}
       end
 
       it "should returns 200 OK" do
@@ -60,7 +60,7 @@ RSpec.describe Rack::BearerAuth do
     context "with match pattern" do
       let(:app) do
         test_app = TestApplicationHelper::TestApplication.new
-        Rack::BearerAuth::Middleware.new(test_app) do
+        described_class.new(test_app) do
           match path: "/foo", token: "test_token"
         end
       end
@@ -115,7 +115,7 @@ RSpec.describe Rack::BearerAuth do
     context "with mismatch pattern" do
       let(:app) do
         test_app = TestApplicationHelper::TestApplication.new
-        Rack::BearerAuth::Middleware.new(test_app) do
+        described_class.new(test_app) do
           match path: "/bar", token: "test_token"
         end
       end
@@ -138,7 +138,7 @@ RSpec.describe Rack::BearerAuth do
     context "with multple patterns" do
       let(:app) do
         test_app = TestApplicationHelper::TestApplication.new
-        Rack::BearerAuth::Middleware.new(test_app) do
+        described_class.new(test_app) do
           match path: "/foo", token: "test_token1"
           match path: "/bar", token: "test_token2"
         end
