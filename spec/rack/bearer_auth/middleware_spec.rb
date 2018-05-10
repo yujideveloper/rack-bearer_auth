@@ -9,7 +9,7 @@ RSpec.describe Rack::BearerAuth::Middleware do
 
   describe "#initialize" do
     let(:test_app) do
-      test_app = TestApplicationHelper::TestApplication.new
+      TestApplicationHelper::TestApplication.new
     end
 
     context "with block argument" do
