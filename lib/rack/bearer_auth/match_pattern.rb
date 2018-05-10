@@ -16,61 +16,61 @@ module Rack
       def match(req)
         return :skip unless match_route?(req)
         return :token_required unless req.token
-        match_token?(req) ? :ok : :invalid_token
+        match_token?(self.token, req.token) ? :ok : :invalid_token
       end
 
       private
 
       def match_route?(req)
-        match_path?(req) && match_via?(req)
+        match_path?(self.path, req.path) && match_via?(self.via, req.via)
       end
 
-      def match_path?(req)
-        case path
+      def match_path?(path_pattern, path_value)
+        case path_pattern
         when nil
           true
         when String
-          path == req.path
+          path_pattern == path_value
         when Regexp
-          !(path =~ req.path).nil?
+          !(path_pattern =~ path_value).nil?
         when Proc
-          path.call(req.path)
+          path_pattern.call(path_value)
         when Array
-          path.any? { match_path?(req) }
+          path_pattern.any? { |pattern| match_path?(pattern, path_value) }
         else
           raise "Unsupported path pattern"
         end
       end
 
-      def match_via?(req)
-        case via
+      def match_via?(via_pattern, via_value)
+        case via_pattern
         when nil, :all
           true
         when Symbol, String
-          via.to_sym == req.via
+          via_pattern.to_sym == via_value
         when Regexp
-          !(via =~ req.via).nil?
+          !(via_pattern =~ via_value).nil?
         when Proc
-          via.call(req.via)
+          via_pattern.call(via_value)
         when Array
-          via.any? { match_via?(req) }
+          via_pattern.any? { |pattern| match_via?(pattern, via_value) }
         else
           raise "Unsupported via pattern"
         end
       end
 
-      def match_token?(req)
-        case token
+      def match_token?(token_pattern, token_value)
+        case token_pattern
         when nil
           true
         when String
-          token == req.token
+          token_pattern == token_value
         when Regexp
-          !(token =~ req.token).nil?
+          !(token_pattern =~ token_value).nil?
         when Proc
-          token.call(req.token)
+          token_pattern.call(token_value)
         when Array
-          token.any? { match_token?(req) }
+          token_pattern.any? { |pattern| match_token?(pattern, token_value) }
         else
           raise "Unsupported token pattern"
         end
