@@ -13,7 +13,7 @@ module Rack
 
       def initialize(env)
         @path = env["PATH_INFO"]
-        @via = env["REQUEST_METHOD"]
+        @via = env["REQUEST_METHOD"].downcase.to_sym
 
         authz = env["HTTP_AUTHORIZATION"]
         @token = Regexp.last_match(1) if authz&.match(BEARER_TOKEN_REGEXP)
