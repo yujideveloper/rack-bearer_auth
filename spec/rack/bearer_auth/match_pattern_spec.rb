@@ -260,12 +260,6 @@ RSpec.describe Rack::BearerAuth::MatchPattern do
 
       let(:token) { "test_token" }
 
-      context "nil" do
-        let(:pattern) { described_class.new(nil) }
-
-        it { is_expected.to eq true }
-      end
-
       context "String" do
         context "match pattern" do
           let(:pattern) { described_class.new("test_token") }

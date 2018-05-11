@@ -102,8 +102,6 @@ module Rack
 
         def _match?(token_pattern, token_value)
           case token_pattern
-          when nil
-            true
           when String
             token_pattern == token_value
           when Regexp
