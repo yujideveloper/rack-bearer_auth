@@ -25,13 +25,27 @@ module Rack
         path.match?(req.path) && via.match?(req.via)
       end
 
-      class Path
+      class Base
         attr_reader :pattern
 
         def initialize(pattern)
           @pattern = pattern
         end
 
+        def match?(*)
+          raise ::NotImplementedError
+        end
+
+        def self.new(*)
+          if self == Base
+            raise ::NotImplementedError,
+                  "#{self} is an abstract class and cannot be instantiated."
+          end
+          super
+        end
+      end
+
+      class Path < Base
         def match?(path)
           _match?(self.pattern, path)
         end
@@ -56,13 +70,7 @@ module Rack
         end
       end
 
-      class Via
-        attr_reader :pattern
-
-        def initialize(pattern)
-          @pattern = pattern
-        end
-
+      class Via < Base
         def match?(via)
           _match?(self.pattern, via)
         end
@@ -87,13 +95,7 @@ module Rack
         end
       end
 
-      class Token
-        attr_reader :pattern
-
-        def initialize(pattern)
-          @pattern = pattern
-        end
-
+      class Token < Base
         def match?(token)
           _match?(self.pattern, token)
         end
