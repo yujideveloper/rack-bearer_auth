@@ -39,6 +39,8 @@ module YourApp
       match via: :all do |token|
         # validate token
       end
+
+      match path: "/bar", via: %i[post patch delete], token: "some_token"
     end
   end
 end
@@ -55,6 +57,8 @@ use Rack::BearerAuth::Middleware do
   match via: :all do |token|
     # validate token
   end
+
+  match path: "/bar", via: %i[post patch delete], token: "some_token"
 end
 
 ```
