@@ -36,69 +36,103 @@ RSpec.describe Rack::BearerAuth::Request do
     end
   end
 
-  describe "token pattern" do
+  describe "Credentials parsing" do
     subject { described_class.new(env).token }
 
-    let(:env) do
-      { "PATH_INFO" => "/foo",
-        "REQUEST_METHOD" => "GET",
-        "HTTP_AUTHORIZATION" => "Bearer #{token}" }
-    end
-
-    let(:valid_chars) do
-      [*"A".."Z", *"a".."z", *"0".."9", "+", "-", ".", "~", "+", "/"]
-    end
-
-    context "not ends with `=`" do
-      let(:token) do
-        valid_chars.shuffle.join
+    describe "separater" do
+      let(:env) do
+        { "PATH_INFO" => "/foo",
+          "REQUEST_METHOD" => "GET",
+          "HTTP_AUTHORIZATION" => "Bearer#{separater}some_token" }
       end
 
-      it { is_expected.to eq token }
-    end
+      context "separated by a space(0x20)" do
+        let(:separater) { " " }
 
-    context "ends with single `=`" do
-      let(:token) do
-        "#{valid_chars.shuffle.join}="
+        it { is_expected.not_to be_nil }
       end
 
-      it { is_expected.to eq token }
-    end
+      context "separated by multiple spaces(0x20)" do
+        let(:separater) { " " * 3 }
 
-    context "ends with multiple `=`" do
-      let(:token) do
-        "#{valid_chars.shuffle.join}=="
+        it { is_expected.not_to be_nil }
       end
 
-      it { is_expected.to eq token }
-    end
+      context "separated by a no-break space(0xA0)" do
+        let(:separater) { " " }
 
-    context "starts with `=`" do
-      let(:token) do
-        "=#{valid_chars.shuffle.join}"
+        it { is_expected.to be_nil }
       end
 
-      it { is_expected.to be_nil }
+      context "separated by a tab" do
+        let(:separater) { "\t" }
+
+        it { is_expected.to be_nil }
+      end
     end
 
-    context "contains with `=`" do
-      let(:token) do
-        last_index = valid_chars.size - 1
-        insert_pos = Range.new(1, last_index, true).to_a.sample
-        valid_chars.shuffle.insert(insert_pos, "=")
+    describe "token pattern" do
+      let(:env) do
+        { "PATH_INFO" => "/foo",
+          "REQUEST_METHOD" => "GET",
+          "HTTP_AUTHORIZATION" => "Bearer #{token}" }
       end
 
-      it { is_expected.to be_nil }
-    end
-
-    context "containts with invalid char" do
-      let(:token) do
-        last_index = valid_chars.size - 1
-        insert_pos = Range.new(1, last_index, true).to_a.sample
-        valid_chars.shuffle.insert(insert_pos, ",")
+      let(:valid_chars) do
+        [*"A".."Z", *"a".."z", *"0".."9", "+", "-", ".", "~", "+", "/"]
       end
 
-      it { is_expected.to be_nil }
+      context "not ends with `=`" do
+        let(:token) do
+          valid_chars.shuffle.join
+        end
+
+        it { is_expected.to eq token }
+      end
+
+      context "ends with single `=`" do
+        let(:token) do
+          "#{valid_chars.shuffle.join}="
+        end
+
+        it { is_expected.to eq token }
+      end
+
+      context "ends with multiple `=`" do
+        let(:token) do
+          "#{valid_chars.shuffle.join}=="
+        end
+
+        it { is_expected.to eq token }
+      end
+
+      context "starts with `=`" do
+        let(:token) do
+          "=#{valid_chars.shuffle.join}"
+        end
+
+        it { is_expected.to be_nil }
+      end
+
+      context "contains with `=`" do
+        let(:token) do
+          last_index = valid_chars.size - 1
+          insert_pos = Range.new(1, last_index, true).to_a.sample
+          valid_chars.shuffle.insert(insert_pos, "=")
+        end
+
+        it { is_expected.to be_nil }
+      end
+
+      context "containts with invalid char" do
+        let(:token) do
+          last_index = valid_chars.size - 1
+          insert_pos = Range.new(1, last_index, true).to_a.sample
+          valid_chars.shuffle.insert(insert_pos, ",")
+        end
+
+        it { is_expected.to be_nil }
+      end
     end
   end
 end
