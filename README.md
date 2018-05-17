@@ -63,7 +63,7 @@ end
 
 ```
 
-#E Restrictions
+## Restrictions
 
 * [Form-Encoded Body Parameter(RFC 6750 section 2.2)](https://tools.ietf.org/html/rfc6750#section-2.2) is not supported.
 * [URI Query Parameter(RFC 6750 section 2.3)](https://tools.ietf.org/html/rfc6750#section-2.3) is not supported.
