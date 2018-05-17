@@ -31,7 +31,7 @@ module YourApp
 
     # ...
 
-    config.middleware.use, Rack::AuthBearer::Middleware do
+    config.middleware.use, Rack::BearerAuth::Middleware do
       match path: "/foo" do |token|
         # validate token
       end
