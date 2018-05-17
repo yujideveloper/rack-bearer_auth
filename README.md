@@ -63,6 +63,12 @@ end
 
 ```
 
+#E Restrictions
+
+* [Form-Encoded Body Parameter(RFC 6750 section 2.2)](https://tools.ietf.org/html/rfc6750#section-2.2) is not supported.
+* [URI Query Parameter(RFC 6750 section 2.3)](https://tools.ietf.org/html/rfc6750#section-2.3) is not supported.
+* `scope` attribute is not supported.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
