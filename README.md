@@ -64,6 +64,14 @@ end
 
 ```
 
+### Configration reference
+
+#### matching options
+
+* `path` (`String`, `Regexp`, `Proc` , `Array`): The HTTP request path matches for the resource.
+* `via` (`Symbol`, `String`, `Regexp`, `Proc` , `Array`, `:all`): The HTTP request method matchs for the resource.
+* `token` (`String`, `Regexp`, `Proc` , `Array`): The access token for the resource.
+
 ## Restrictions
 
 * [Form-Encoded Body Parameter(RFC 6750 section 2.2)](https://tools.ietf.org/html/rfc6750#section-2.2) is not supported.
