@@ -35,6 +35,8 @@ module Rack
       def handle(req)
         @match_patterns.each do |pattern|
           case pattern.match(req)
+          when :skip
+            next
           when :ok
             break
           when :token_required
