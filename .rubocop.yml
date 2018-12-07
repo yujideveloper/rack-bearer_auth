@@ -21,3 +21,7 @@ Layout/EndOfLine:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+
+Metrics/LineLength:
+  Max: 128
+  IgnoreCopDirectives: true
