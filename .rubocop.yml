@@ -18,6 +18,10 @@ Layout/EndOfLine:
   Enabled: true
   EnforcedStyle: lf
 
+Layout/AlignHash:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
 Metrics/BlockLength:
   Exclude:
     - spec/**/*

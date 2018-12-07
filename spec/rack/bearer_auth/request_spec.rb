@@ -8,8 +8,8 @@ RSpec.describe Rack::BearerAuth::Request do
 
     context "HTTP_AUTHORIZATION header for bearer auth is specified" do
       let(:env) do
-        { "PATH_INFO" => "/foo",
-          "REQUEST_METHOD" => "GET",
+        { "PATH_INFO"          => "/foo",
+          "REQUEST_METHOD"     => "GET",
           "HTTP_AUTHORIZATION" => "Bearer test_token" }
       end
 
@@ -18,8 +18,8 @@ RSpec.describe Rack::BearerAuth::Request do
 
     context "HTTP_AUTHORIZATION header for Basic auth is specified" do
       let(:env) do
-        { "PATH_INFO" => "/foo",
-          "REQUEST_METHOD" => "GET",
+        { "PATH_INFO"          => "/foo",
+          "REQUEST_METHOD"     => "GET",
           "HTTP_AUTHORIZATION" => "Basic dXNlcjpwYXNzd29yZA==" }
       end
 
@@ -28,7 +28,7 @@ RSpec.describe Rack::BearerAuth::Request do
 
     context "HTTP_AUTHORIZATION header is not specified" do
       let(:env) do
-        { "PATH_INFO" => "/foo",
+        { "PATH_INFO"      => "/foo",
           "REQUEST_METHOD" => "GET" }
       end
 
@@ -41,8 +41,8 @@ RSpec.describe Rack::BearerAuth::Request do
 
     describe "separater" do
       let(:env) do
-        { "PATH_INFO" => "/foo",
-          "REQUEST_METHOD" => "GET",
+        { "PATH_INFO"          => "/foo",
+          "REQUEST_METHOD"     => "GET",
           "HTTP_AUTHORIZATION" => "Bearer#{separater}some_token" }
       end
 
@@ -73,8 +73,8 @@ RSpec.describe Rack::BearerAuth::Request do
 
     describe "token pattern" do
       let(:env) do
-        { "PATH_INFO" => "/foo",
-          "REQUEST_METHOD" => "GET",
+        { "PATH_INFO"          => "/foo",
+          "REQUEST_METHOD"     => "GET",
           "HTTP_AUTHORIZATION" => "Bearer #{token}" }
       end
 
