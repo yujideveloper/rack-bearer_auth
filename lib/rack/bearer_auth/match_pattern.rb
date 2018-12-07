@@ -16,6 +16,7 @@ module Rack
       def match(req)
         return :skip unless match_route?(req)
         return :token_required unless req.token
+
         token.match?(req.token) ? :ok : :invalid_token
       end
 
@@ -52,7 +53,7 @@ module Rack
 
         private
 
-        def _match?(path_pattern, path_value)
+        def _match?(path_pattern, path_value) # rubocop:disable Metrics/MethodLength
           case path_pattern
           when nil
             true
@@ -77,7 +78,7 @@ module Rack
 
         private
 
-        def _match?(via_pattern, via_value)
+        def _match?(via_pattern, via_value) # rubocop:disable Metrics/MethodLength
           case via_pattern
           when nil, :all
             true
@@ -102,7 +103,7 @@ module Rack
 
         private
 
-        def _match?(token_pattern, token_value)
+        def _match?(token_pattern, token_value) # rubocop:disable Metrics/MethodLength
           case token_pattern
           when String
             token_pattern == token_value

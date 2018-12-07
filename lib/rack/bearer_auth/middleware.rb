@@ -32,7 +32,7 @@ module Rack
 
       private
 
-      def handle(req)
+      def handle(req) # rubocop:disable Metrics/MethodLength
         @match_patterns.each do |pattern|
           case pattern.match(req)
           when :skip

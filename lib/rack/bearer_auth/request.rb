@@ -7,7 +7,7 @@ module Rack
       # b64token    = 1*( ALPHA / DIGIT /
       #                   "-" / "." / "_" / "~" / "+" / "/" ) *"="
       # credentials = "Bearer" 1*SP b64token
-      BEARER_TOKEN_REGEXP = %r{\ABearer +([A-Za-z0-9\-._~+/]+=*)\z}
+      BEARER_TOKEN_REGEXP = %r{\ABearer +([A-Za-z0-9\-._~+/]+=*)\z}.freeze
 
       attr_reader :path, :via, :token
 
