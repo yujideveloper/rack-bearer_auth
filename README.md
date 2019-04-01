@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ## Configuration
 
-### Rsils configuration
+### Rails configuration
 
 ``` ruby
 module YourApp
@@ -32,13 +32,15 @@ module YourApp
 
     # ...
 
-    config.middleware.use, Rack::BearerAuth::Middleware do
+    config.middleware.use Rack::BearerAuth::Middleware do
       match path: "/foo" do |token|
         # validate token
+        # AccessToken.where(token: token).exists?
       end
 
       match via: :all do |token|
         # validate token
+        # AccessToken.where(token: token).exists?
       end
 
       match path: "/bar", via: %i[post patch delete], token: "some_token"
@@ -53,10 +55,12 @@ end
 use Rack::BearerAuth::Middleware do
   match path: "/foo" do |token|
     # validate token
+    # AccessToken.where(token: token).exists?
   end
 
   match via: :all do |token|
     # validate token
+    # AccessToken.where(token: token).exists?
   end
 
   match path: "/bar", via: %i[post patch delete], token: "some_token"
