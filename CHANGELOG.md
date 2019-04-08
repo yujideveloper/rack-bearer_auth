@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 1.0.0 (2019-04-08)
+
 ### Changes
 
 * Add support Ruby 2.6
