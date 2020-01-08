@@ -18,14 +18,14 @@ Layout/EndOfLine:
   Enabled: true
   EnforcedStyle: lf
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedColonStyle: table
   EnforcedHashRocketStyle: table
+
+Layout/LineLength:
+  Max: 128
+  IgnoreCopDirectives: true
 
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
-
-Metrics/LineLength:
-  Max: 128
-  IgnoreCopDirectives: true
