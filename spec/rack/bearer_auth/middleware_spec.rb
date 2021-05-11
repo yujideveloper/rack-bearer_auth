@@ -28,6 +28,16 @@ RSpec.describe Rack::BearerAuth::Middleware do
 
       it { expect { subject }.to raise_error(ArgumentError) }
     end
+
+    context "with block argument and single arity" do
+      subject do
+        described_class.new(test_app) do |token|
+          token == 'test_token'
+        end
+      end
+
+      it { expect { subject }.not_to raise_error }
+    end
   end
 
   describe "GET /foo" do

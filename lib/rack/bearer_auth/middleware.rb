@@ -8,11 +8,16 @@ module Rack
     class Middleware
       def initialize(app, &block)
         raise ArgumentError, "Block argument is required." unless block_given?
+        raise ArgumentError, "Block argument can only accept 0 or 1 arguments." unless block.arity <= 1
 
         @app = app
         @match_patterns = []
 
-        instance_exec(&block)
+        # original block handler
+        instance_exec(&block) if block.arity == 0
+
+        # token based block handler
+        match(&block) if block.arity == 1
       end
 
       def call(env)
