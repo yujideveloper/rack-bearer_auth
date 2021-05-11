@@ -14,3 +14,4 @@
 .direnv/
 .envrc
 .ruby-version
+*.gem
