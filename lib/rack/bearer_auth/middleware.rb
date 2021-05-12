@@ -8,7 +8,7 @@ module Rack
     class Middleware
       def initialize(app, &block)
         raise ArgumentError, "Block argument is required." unless block_given?
-        raise ArgumentError, "Block can only accept 0 or 1 arguments." unless block.arity <= 1
+        raise ArgumentError, "Block can only accept 0 or 1 arguments." unless (block.arity <= 1)
 
         @app = app
         @match_patterns = []
