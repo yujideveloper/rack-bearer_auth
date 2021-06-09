@@ -2,7 +2,7 @@
 
 ### Changes
 
-* Add support Ruby 3.0
+* Add support Ruby 2.7 and 3.0
 * Drop support Ruby 2.3 and 2.4
 
 ### Misc
