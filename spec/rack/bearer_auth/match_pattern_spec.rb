@@ -53,44 +53,148 @@ RSpec.describe Rack::BearerAuth::MatchPattern do
   describe "#match" do
     subject { match_pattern.match(request) }
 
-    let(:match_pattern) do
-      described_class.new(path, via, token)
+    context "when full matching pattern" do
+      let(:match_pattern) do
+        described_class.new(path, via, token)
+      end
+      let(:path) { "/foo" }
+      let(:via) { :get }
+      let(:token) { "test_token" }
+      let(:request_class) do
+        Struct.new(:path, :via, :token)
+      end
+
+      context "match" do
+        let(:request) { request_class.new(path, via, token) }
+
+        it { is_expected.to eq :ok }
+      end
+
+      context "mismatch path" do
+        let(:request) { request_class.new("/bar", via, token) }
+
+        it { is_expected.to eq :skip }
+      end
+
+      context "mismatch via" do
+        let(:request) { request_class.new(path, :post, token) }
+
+        it { is_expected.to eq :skip }
+      end
+
+      context "empty token" do
+        let(:request) { request_class.new(path, via, nil) }
+
+        it { is_expected.to eq :token_required }
+      end
+
+      context "mismatch token" do
+        let(:request) { request_class.new(path, via, "mismatch_token") }
+
+        it { is_expected.to eq :invalid_token }
+      end
     end
-    let(:path) { "/foo" }
-    let(:via) { :get }
-    let(:token) { "test_token" }
-    let(:request_class) do
-      Struct.new(:path, :via, :token)
+
+    context "when path and token matching pattern" do
+      let(:match_pattern) do
+        described_class.new(path, nil, token)
+      end
+      let(:path) { "/foo" }
+      let(:via) { :get }
+      let(:token) { "test_token" }
+      let(:request_class) do
+        Struct.new(:path, :via, :token)
+      end
+
+      context "match" do
+        let(:request) { request_class.new(path, via, token) }
+
+        it { is_expected.to eq :ok }
+      end
+
+      context "mismatch path" do
+        let(:request) { request_class.new("/bar", via, token) }
+
+        it { is_expected.to eq :skip }
+      end
+
+      context "empty token" do
+        let(:request) { request_class.new(path, via, nil) }
+
+        it { is_expected.to eq :token_required }
+      end
+
+      context "mismatch token" do
+        let(:request) { request_class.new(path, via, "mismatch_token") }
+
+        it { is_expected.to eq :invalid_token }
+      end
     end
 
-    context "match" do
-      let(:request) { request_class.new(path, via, token) }
+    context "when via and token matching pattern" do
+      let(:match_pattern) do
+        described_class.new(nil, via, token)
+      end
+      let(:path) { "/foo" }
+      let(:via) { :get }
+      let(:token) { "test_token" }
+      let(:request_class) do
+        Struct.new(:path, :via, :token)
+      end
 
-      it { is_expected.to eq :ok }
+      context "match" do
+        let(:request) { request_class.new(path, via, token) }
+
+        it { is_expected.to eq :ok }
+      end
+
+      context "mismatch via" do
+        let(:request) { request_class.new(path, :post, token) }
+
+        it { is_expected.to eq :skip }
+      end
+
+      context "empty token" do
+        let(:request) { request_class.new(path, via, nil) }
+
+        it { is_expected.to eq :token_required }
+      end
+
+      context "mismatch token" do
+        let(:request) { request_class.new(path, via, "mismatch_token") }
+
+        it { is_expected.to eq :invalid_token }
+      end
     end
 
-    context "mismatch path" do
-      let(:request) { request_class.new("/bar", via, token) }
+    context "when token only matching pattern" do
+      let(:match_pattern) do
+        described_class.new(nil, nil, token)
+      end
+      let(:path) { "/foo" }
+      let(:via) { :get }
+      let(:token) { "test_token" }
+      let(:request_class) do
+        Struct.new(:path, :via, :token)
+      end
 
-      it { is_expected.to eq :skip }
-    end
+      context "match" do
+        let(:request) { request_class.new(path, via, token) }
 
-    context "mismatch via" do
-      let(:request) { request_class.new(path, :post, token) }
+        it { is_expected.to eq :ok }
+      end
 
-      it { is_expected.to eq :skip }
-    end
+      context "mismatch" do
+        let(:request) { request_class.new(path, via, "mismatch token") }
 
-    context "empty token" do
-      let(:request) { request_class.new(path, via, nil) }
+        it { is_expected.to eq :invalid_token }
+      end
 
-      it { is_expected.to eq :token_required }
-    end
+      context "empty token" do
+        let(:request) { request_class.new(path, via, nil) }
 
-    context "mismatch token" do
-      let(:request) { request_class.new(path, via, "mismatch_token") }
-
-      it { is_expected.to eq :invalid_token }
+        it { is_expected.to eq :token_required }
+      end
     end
   end
 
