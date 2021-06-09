@@ -14,7 +14,7 @@ RSpec.describe Rack::BearerAuth::Middleware do
 
     context "with block argument" do
       subject do
-        described_class.new(test_app) do
+        described_class.new(test_app) do # rubocop:disable Lint/EmptyBlock
         end
       end
 
@@ -39,7 +39,7 @@ RSpec.describe Rack::BearerAuth::Middleware do
     context "with empty pattern" do
       let(:app) do
         test_app = TestApplicationHelper::TestApplication.new
-        described_class.new(test_app) {}
+        described_class.new(test_app) {} # rubocop:disable Lint/EmptyBlock
       end
 
       it "should returns 200 OK" do

@@ -1,5 +1,14 @@
 ## Unreleased
 
+### Changes
+
+* Add support Ruby 3.0
+* Drop support Ruby 2.3 and 2.4
+
+### Misc
+
+* Bump version of development dependencies
+
 
 ## 1.0.0 (2019-04-08)
 
